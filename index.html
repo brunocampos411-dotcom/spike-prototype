@@ -1,501 +1,500 @@
-     1|<!DOCTYPE html>
-     2|<html lang="pt-BR">
-     3|<head>
-     4|<meta charset="UTF-8">
-     5|<meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6|<title>Revela — Marketplace de Talentos do Vôlei</title>
-     7|<link rel="preconnect" href="https://fonts.googleapis.com">
-     8|<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     9|<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    10|<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
-    11|<style>
-    12|  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    13|
-    14|  :root {
-    15|    --bg: #0D0D0D;
-    16|    --bg-2: #141414;
-    17|    --bg-3: #1A1A1A;
-    18|    --bg-card: #161616;
-    19|    --border: #232323;
-    20|    --border-light: #2A2A2A;
-    21|    --text: #F2F2F0;
-    22|    --text-muted: #6B6B6B;
-    23|    --text-sub: #9A9A9A;
-    24|    --accent: #FF5C1A;
-    25|    --accent-dim: rgba(255,92,26,0.12);
-    26|    --green: #22C55E;
-    27|    --red: #EF4444;
-    28|  }
-    29|
-    30|  html { scroll-behavior: smooth; }
-    31|
-    32|  body {
-    33|    background: var(--bg);
-    34|    color: var(--text);
-    35|    font-family: 'DM Sans', sans-serif;
-    36|    font-weight: 300;
-    37|    min-height: 100vh;
-    38|    -webkit-font-smoothing: antialiased;
-    39|  }
-    40|
-    41|  h1, h2, h3, h4, .syne {
-    42|    font-family: 'Syne', sans-serif;
-    43|  }
-    44|
-    45|  /* ─── NAV ─── */
-    46|  .nav {
-    47|    position: sticky;
-    48|    top: 0;
-    49|    z-index: 100;
-    50|    background: rgba(13,13,13,0.92);
-    51|    backdrop-filter: blur(12px);
-    52|    border-bottom: 1px solid var(--border);
-    53|    display: flex;
-    54|    align-items: center;
-    55|    justify-content: space-between;
-    56|    padding: 0 40px;
-    57|    height: 60px;
-    58|  }
-    59|
-    60|  .nav-logo {
-    61|    font-family: 'Syne', sans-serif;
-    62|    font-weight: 800;
-    63|    font-size: 22px;
-    64|    color: var(--text);
-    65|    letter-spacing: -0.5px;
-    66|    display: flex;
-    67|    align-items: center;
-    68|    gap: 8px;
-    69|  }
-    70|
-    71|  .nav-logo span {
-    72|    color: var(--accent);
-    73|  }
-    74|
-    75|  .nav-tabs {
-    76|    display: flex;
-    77|    gap: 4px;
-    78|  }
-    79|
-    80|  .nav-tab {
-    81|    background: none;
-    82|    border: none;
-    83|    color: var(--text-muted);
-    84|    font-family: 'DM Sans', sans-serif;
-    85|    font-size: 13px;
-    86|    font-weight: 400;
-    87|    padding: 7px 16px;
-    88|    border-radius: 6px;
-    89|    cursor: pointer;
-    90|    transition: all 150ms ease;
-    91|    letter-spacing: 0.02em;
-    92|  }
-    93|
-    94|  .nav-tab:hover {
-    95|    color: var(--text);
-    96|    background: var(--bg-3);
-    97|  }
-    98|
-    99|  .nav-tab.active {
-   100|    color: var(--text);
-   101|    background: var(--bg-3);
-   102|    border: 1px solid var(--border-light);
-   103|  }
-   104|
-   105|  .nav-badge {
-   106|    font-size: 10px;
-   107|    background: var(--accent);
-   108|    color: white;
-   109|    padding: 1px 5px;
-   110|    border-radius: 4px;
-   111|    font-weight: 500;
-   112|    margin-left: 4px;
-   113|  }
-   114|
-   115|  /* ─── PANELS ─── */
-   116|  .panel {
-   117|    display: none;
-   118|    min-height: calc(100vh - 60px);
-   119|  }
-   120|  .panel.active {
-   121|    display: block;
-   122|  }
-   123|
-   124|  /* ─── HOME ─── */
-   125|  .home-hero {
-   126|    max-width: 900px;
-   127|    margin: 0 auto;
-   128|    padding: 100px 40px 80px;
-   129|    text-align: left;
-   130|  }
-   131|
-   132|  .eyebrow {
-   133|    display: inline-flex;
-   134|    align-items: center;
-   135|    gap: 6px;
-   136|    font-family: 'DM Sans', sans-serif;
-   137|    font-size: 11px;
-   138|    font-weight: 500;
-   139|    letter-spacing: 0.12em;
-   140|    text-transform: uppercase;
-   141|    color: var(--accent);
-   142|    margin-bottom: 28px;
-   143|    border: 1px solid var(--accent-dim);
-   144|    padding: 5px 12px;
-   145|    border-radius: 20px;
-   146|    background: var(--accent-dim);
-   147|  }
-   148|
-   149|  .hero-headline {
-   150|    font-family: 'Syne', sans-serif;
-   151|    font-weight: 800;
-   152|    font-size: clamp(48px, 6vw, 80px);
-   153|    line-height: 1.0;
-   154|    letter-spacing: -2px;
-   155|    color: var(--text);
-   156|    margin-bottom: 28px;
-   157|  }
-   158|
-   159|  .hero-headline em {
-   160|    font-style: normal;
-   161|    color: var(--accent);
-   162|  }
-   163|
-   164|  .hero-sub {
-   165|    font-family: 'DM Sans', sans-serif;
-   166|    font-weight: 300;
-   167|    font-size: 18px;
-   168|    line-height: 1.7;
-   169|    color: var(--text-sub);
-   170|    max-width: 540px;
-   171|    margin-bottom: 48px;
-   172|  }
-   173|
-   174|  .cta-row {
-   175|    display: flex;
-   176|    gap: 12px;
-   177|    align-items: center;
-   178|    flex-wrap: wrap;
-   179|  }
-   180|
-   181|  .btn-primary {
-   182|    background: var(--accent);
-   183|    color: white;
-   184|    border: none;
-   185|    font-family: 'DM Sans', sans-serif;
-   186|    font-size: 14px;
-   187|    font-weight: 500;
-   188|    padding: 14px 28px;
-   189|    border-radius: 8px;
-   190|    cursor: pointer;
-   191|    transition: all 150ms ease;
-   192|    display: flex;
-   193|    align-items: center;
-   194|    gap: 8px;
-   195|  }
-   196|
-   197|  .btn-primary:hover {
-   198|    background: #FF7040;
-   199|    transform: translateY(-1px);
-   200|  }
-   201|
-   202|  .btn-outline {
-   203|    background: transparent;
-   204|    color: var(--text);
-   205|    border: 1px solid var(--border-light);
-   206|    font-family: 'DM Sans', sans-serif;
-   207|    font-size: 14px;
-   208|    font-weight: 400;
-   209|    padding: 14px 28px;
-   210|    border-radius: 8px;
-   211|    cursor: pointer;
-   212|    transition: all 150ms ease;
-   213|    display: flex;
-   214|    align-items: center;
-   215|    gap: 8px;
-   216|  }
-   217|
-   218|  .btn-outline:hover {
-   219|    border-color: var(--text-sub);
-   220|    color: var(--text);
-   221|  }
-   222|
-   223|  /* Metrics */
-   224|  .metrics-bar {
-   225|    border-top: 1px solid var(--border);
-   226|    border-bottom: 1px solid var(--border);
-   227|    padding: 56px 40px;
-   228|    display: flex;
-   229|    justify-content: center;
-   230|    gap: 0;
-   231|    overflow: hidden;
-   232|  }
-   233|
-   234|  .metric-item {
-   235|    flex: 1;
-   236|    max-width: 280px;
-   237|    padding: 0 48px;
-   238|    position: relative;
-   239|  }
-   240|
-   241|  .metric-item:not(:last-child)::after {
-   242|    content: '';
-   243|    position: absolute;
-   244|    right: 0;
-   245|    top: 10%;
-   246|    height: 80%;
-   247|    width: 1px;
-   248|    background: var(--border);
-   249|  }
-   250|
-   251|  .metric-num {
-   252|    font-family: 'Syne', sans-serif;
-   253|    font-weight: 800;
-   254|    font-size: 52px;
-   255|    line-height: 1;
-   256|    letter-spacing: -2px;
-   257|    color: var(--text);
-   258|    display: block;
-   259|    margin-bottom: 8px;
-   260|  }
-   261|
-   262|  .metric-num span {
-   263|    color: var(--accent);
-   264|  }
-   265|
-   266|  .metric-label {
-   267|    font-family: 'DM Sans', sans-serif;
-   268|    font-size: 13px;
-   269|    font-weight: 300;
-   270|    color: var(--text-muted);
-   271|    line-height: 1.5;
-   272|  }
-   273|
-   274|  /* Steps */
-   275|  .steps-section {
-   276|    max-width: 900px;
-   277|    margin: 0 auto;
-   278|    padding: 80px 40px;
-   279|  }
-   280|
-   281|  .section-label {
-   282|    font-family: 'DM Sans', sans-serif;
-   283|    font-size: 11px;
-   284|    font-weight: 500;
-   285|    letter-spacing: 0.12em;
-   286|    text-transform: uppercase;
-   287|    color: var(--text-muted);
-   288|    margin-bottom: 40px;
-   289|  }
-   290|
-   291|  .steps-grid {
-   292|    display: grid;
-   293|    grid-template-columns: 1fr 1fr 1fr;
-   294|    gap: 2px;
-   295|    background: var(--border);
-   296|    border: 1px solid var(--border);
-   297|    border-radius: 12px;
-   298|    overflow: hidden;
-   299|  }
-   300|
-   301|  .step-card {
-   302|    background: var(--bg-card);
-   303|    padding: 36px 32px;
-   304|    transition: background 150ms ease;
-   305|  }
-   306|
-   307|  .step-card:hover {
-   308|    background: var(--bg-3);
-   309|  }
-   310|
-   311|  .step-num {
-   312|    font-family: 'Syne', sans-serif;
-   313|    font-size: 11px;
-   314|    font-weight: 700;
-   315|    letter-spacing: 0.08em;
-   316|    color: var(--accent);
-   317|    margin-bottom: 20px;
-   318|  }
-   319|
-   320|  .step-icon {
-   321|    width: 40px;
-   322|    height: 40px;
-   323|    background: var(--bg-3);
-   324|    border: 1px solid var(--border-light);
-   325|    border-radius: 10px;
-   326|    display: flex;
-   327|    align-items: center;
-   328|    justify-content: center;
-   329|    margin-bottom: 20px;
-   330|    font-size: 18px;
-   331|    color: var(--text-sub);
-   332|  }
-   333|
-   334|  .step-title {
-   335|    font-family: 'Syne', sans-serif;
-   336|    font-size: 18px;
-   337|    font-weight: 700;
-   338|    color: var(--text);
-   339|    margin-bottom: 10px;
-   340|    line-height: 1.3;
-   341|  }
-   342|
-   343|  .step-desc {
-   344|    font-size: 13px;
-   345|    font-weight: 300;
-   346|    color: var(--text-muted);
-   347|    line-height: 1.6;
-   348|  }
-   349|
-   350|  /* ─── VITRINE ─── */
-   351|  .vitrine-wrap {
-   352|    max-width: 1100px;
-   353|    margin: 0 auto;
-   354|    padding: 48px 40px;
-   355|  }
-   356|
-   357|  .vitrine-header {
-   358|    display: flex;
-   359|    align-items: center;
-   360|    justify-content: space-between;
-   361|    margin-bottom: 32px;
-   362|    flex-wrap: wrap;
-   363|    gap: 16px;
-   364|  }
-   365|
-   366|  .vitrine-title {
-   367|    font-family: 'Syne', sans-serif;
-   368|    font-size: 28px;
-   369|    font-weight: 800;
-   370|    letter-spacing: -0.5px;
-   371|  }
-   372|
-   373|  .filter-row {
-   374|    display: flex;
-   375|    gap: 8px;
-   376|    flex-wrap: wrap;
-   377|    margin-bottom: 32px;
-   378|  }
-   379|
-   380|  .filter-group {
-   381|    display: flex;
-   382|    gap: 4px;
-   383|    flex-wrap: wrap;
-   384|  }
-   385|
-   386|  .filter-label {
-   387|    font-size: 11px;
-   388|    color: var(--text-muted);
-   389|    font-weight: 500;
-   390|    letter-spacing: 0.06em;
-   391|    text-transform: uppercase;
-   392|    display: flex;
-   393|    align-items: center;
-   394|    padding-right: 8px;
-   395|  }
-   396|
-   397|  .filter-btn {
-   398|    background: none;
-   399|    border: 1px solid var(--border);
-   400|    color: var(--text-muted);
-   401|    font-family: 'DM Sans', sans-serif;
-   402|    font-size: 12px;
-   403|    font-weight: 400;
-   404|    padding: 6px 14px;
-   405|    border-radius: 6px;
-   406|    cursor: pointer;
-   407|    transition: all 150ms ease;
-   408|  }
-   409|
-   410|  .filter-btn:hover, .filter-btn.active {
-   411|    background: var(--bg-3);
-   412|    border-color: var(--border-light);
-   413|    color: var(--text);
-   414|  }
-   415|
-   416|  .filter-btn.active {
-   417|    border-color: var(--accent);
-   418|    color: var(--accent);
-   419|  }
-   420|
-   421|  .athletes-grid {
-   422|    display: grid;
-   423|    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-   424|    gap: 2px;
-   425|    background: var(--border);
-   426|    border: 1px solid var(--border);
-   427|    border-radius: 12px;
-   428|    overflow: hidden;
-   429|  }
-   430|
-   431|  .athlete-card {
-   432|    background: var(--bg-card);
-   433|    cursor: pointer;
-   434|    transition: background 150ms ease;
-   435|    position: relative;
-   436|    overflow: hidden;
-   437|  }
-   438|
-   439|  .athlete-card:hover {
-   440|    background: var(--bg-3);
-   441|  }
-   442|
-   443|  .athlete-card.expanded {
-   444|    grid-column: 1 / -1;
-   445|    background: var(--bg-2);
-   446|    cursor: default;
-   447|  }
-   448|
-   449|  .card-thumb {
-   450|    height: 120px;
-   451|    display: flex;
-   452|    align-items: center;
-   453|    justify-content: center;
-   454|    font-family: 'Syne', sans-serif;
-   455|    font-size: 32px;
-   456|    font-weight: 800;
-   457|    color: rgba(255,255,255,0.5);
-   458|    position: relative;
-   459|    overflow: hidden;
-   460|  }
-   461|
-   462|  .card-body {
-   463|    padding: 16px;
-   464|  }
-   465|
-   466|  .athlete-name {
-   467|    font-family: 'Syne', sans-serif;
-   468|    font-size: 15px;
-   469|    font-weight: 700;
-   470|    color: var(--text);
-   471|    margin-bottom: 8px;
-   472|  }
-   473|
-   474|  .pills-row {
-   475|    display: flex;
-   476|    gap: 4px;
-   477|    flex-wrap: wrap;
-   478|    margin-bottom: 10px;
-   479|  }
-   480|
-   481|  .pill {
-   482|    font-size: 10px;
-   483|    font-weight: 500;
-   484|    padding: 3px 8px;
-   485|    border-radius: 4px;
-   486|    border: 1px solid var(--border-light);
-   487|    color: var(--text-sub);
-   488|    background: var(--bg-3);
-   489|    letter-spacing: 0.02em;
-   490|  }
-   491|
-   492|  .pill.pos { border-color: rgba(255,92,26,0.3); color: var(--accent); background: var(--accent-dim); }
-   493|
-   494|  .card-meta {
-   495|    display: flex;
-   496|    justify-content: space-between;
-   497|    align-items: flex-end;
-   498|  }
-   499|
-   500|  .meta-info {
-   501|
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revela — Marketplace de Talentos do Vôlei</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0D0D0D;
+    --bg-2: #141414;
+    --bg-3: #1A1A1A;
+    --bg-card: #161616;
+    --border: #232323;
+    --border-light: #2A2A2A;
+    --text: #F2F2F0;
+    --text-muted: #6B6B6B;
+    --text-sub: #9A9A9A;
+    --accent: #FF5C1A;
+    --accent-dim: rgba(255,92,26,0.12);
+    --green: #22C55E;
+    --red: #EF4444;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .syne {
+    font-family: 'Syne', sans-serif;
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo span {
+    color: var(--accent);
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+  }
+
+  .nav-tab {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 7px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 150ms ease;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-tab:hover {
+    color: var(--text);
+    background: var(--bg-3);
+  }
+
+  .nav-tab.active {
+    color: var(--text);
+    background: var(--bg-3);
+    border: 1px solid var(--border-light);
+  }
+
+  .nav-badge {
+    font-size: 10px;
+    background: var(--accent);
+    color: white;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+
+  /* ─── PANELS ─── */
+  .panel {
+    display: none;
+    min-height: calc(100vh - 60px);
+  }
+  .panel.active {
+    display: block;
+  }
+
+  /* ─── HOME ─── */
+  .home-hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+    text-align: left;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    border: 1px solid var(--accent-dim);
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: var(--accent-dim);
+  }
+
+  .hero-headline {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -2px;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+
+  .hero-headline em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-sub);
+    max-width: 540px;
+    margin-bottom: 48px;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 150ms ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: #FF7040;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 14px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 150ms ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--text-sub);
+    color: var(--text);
+  }
+
+  /* Metrics */
+  .metrics-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 40px;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .metric-item {
+    flex: 1;
+    max-width: 280px;
+    padding: 0 48px;
+    position: relative;
+  }
+
+  .metric-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .metric-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: var(--text);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .metric-num span {
+    color: var(--accent);
+  }
+
+  .metric-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Steps */
+  .steps-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .section-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .step-card {
+    background: var(--bg-card);
+    padding: 36px 32px;
+    transition: background 150ms ease;
+  }
+
+  .step-card:hover {
+    background: var(--bg-3);
+  }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .step-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: var(--text-sub);
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ─── VITRINE ─── */
+  .vitrine-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 40px;
+  }
+
+  .vitrine-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .vitrine-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+  }
+
+  .filter-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--bg-3);
+    border-color: var(--border-light);
+    color: var(--text);
+  }
+
+  .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .athletes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .athlete-card {
+    background: var(--bg-card);
+    cursor: pointer;
+    transition: background 150ms ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .athlete-card:hover {
+    background: var(--bg-3);
+  }
+
+  .athlete-card.expanded {
+    grid-column: 1 / -1;
+    background: var(--bg-2);
+    cursor: default;
+  }
+
+  .card-thumb {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .athlete-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .pills-row {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .pill {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-light);
+    color: var(--text-sub);
+    background: var(--bg-3);
+    letter-spacing: 0.02em;
+  }
+
+  .pill.pos { border-color: rgba(255,92,26,0.3); color: var(--accent); background: var(--accent-dim); }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .meta-info {
